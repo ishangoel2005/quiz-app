@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; background: #f4f6f8; }
+        h1 { color: #2c3e50; text-align: center; }
+        .score { font-size: 24px; text-align: center; background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .result { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 5px solid #ccc; }
+        .correct { border-left-color: #27ae60; }
+        .wrong { border-left-color: #e74c3c; }
+        a { display: block; text-align: center; margin-top: 20px; color: #3498db; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Your Results</h1>
+    <div class="score">You scored <strong>{{ score }} / {{ total }}</strong></div>
+    {% for r in results %}
+    <div class="result {% if r.is_correct %}correct{% else %}wrong{% endif %}">
+        <p><strong>{{ loop.index }}. {{ r.question }}</strong></p>
+        <p>Your answer: {{ r.your_answer }}</p>
+        {% if not r.is_correct %}
+        <p>Correct answer: {{ r.correct_answer }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <a href="/">Try Again</a>
+</body>
+</html>
