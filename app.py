@@ -5,7 +5,7 @@ app = Flask(__name__)
 # Quiz questions - add/edit freely
 QUESTIONS = [
     {
-        "question": "Which AWS service is used for virtual servers?",
+        "question": "Which Amazon Web Service is used for virtual servers?",
         "options": ["S3", "EC2", "RDS", "Lambda"],
         "answer": "EC2"
     },
