@@ -28,11 +28,6 @@ QUESTIONS = [
         "question": "Which port does this Flask app run on?",
         "options": ["3000", "8080", "5000", "80"],
         "answer": "5000"
-    },
-    {
-        "question": "Which port does this Flask app run on?",
-        "options": ["3000", "8080", "5000", "80"],
-        "answer": "5000"
     }
 ]
 
