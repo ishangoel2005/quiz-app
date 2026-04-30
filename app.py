@@ -5,7 +5,7 @@ app = Flask(__name__)
 # Quiz questions - add/edit freely
 QUESTIONS = [
     {
-        "question": "Which AWS is used for virtual servers?",
+        "question": "Which Amazon Web Services is used for virtual servers?",
         "options": ["S3", "EC2", "RDS", "Lambda"],
         "answer": "EC2"
     },
@@ -23,11 +23,6 @@ QUESTIONS = [
         "question": "What triggers the Jenkins pipeline?",
         "options": ["Manual click", "GitHub webhook on push", "Email", "A cron job only"],
         "answer": "GitHub webhook on push"
-    },
-    {
-        "question": "Which port does this Flask app run on?",
-        "options": ["3000", "8080", "5000", "80"],
-        "answer": "5000"
     },
     {
         "question": "Which port does this Flask app run on?",
