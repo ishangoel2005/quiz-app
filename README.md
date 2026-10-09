@@ -1,4 +1,4 @@
-# Quiz App — CI/CD with Jenkins, Docker, and AWS EC2
+# Quiz App - CI/CD with Jenkins, Docker, and AWS EC2
 
 Flask quiz app that auto-deploys to EC2 on every `git push`.
 
@@ -6,7 +6,7 @@ Flask quiz app that auto-deploys to EC2 on every `git push`.
 
 ---
 
-## 📁 File Structure
+## File Structure
 
 ```
 quiz-app/
@@ -23,21 +23,21 @@ quiz-app/
 
 ---
 
-## 🖥️ Where to run each step
+## Where to run each step
 
 | Symbol | Where |
 |--------|-------|
-| 💻 | **Local VS Code terminal** (your laptop) |
-| ☁️ | **AWS Console** (browser) |
-| 🔧 | **EC2 SSH terminal** (inside the EC2 after you SSH in) |
-| 🌐 | **Jenkins web UI** (browser, http://EC2_IP:8080) |
-| 📦 | **GitHub website** (browser) |
+| **Local VS Code terminal** (your laptop) |
+| **AWS Console** (browser) |
+| **EC2 SSH terminal** (inside the EC2 after you SSH in) |
+| **Jenkins web UI** (browser, http://EC2_IP:8080) |
+| **GitHub website** (browser) |
 
 ---
 
 ## PART 1 — Local setup and push to GitHub
 
-### Step 1: Test the app locally 💻
+### Step 1: Test the app locally
 
 ```bash
 cd quiz-app
@@ -46,13 +46,13 @@ python app.py
 ```
 Open http://localhost:5000 — you should see the quiz. Press `Ctrl+C` to stop.
 
-### Step 2: Create a GitHub repo 📦
+### Step 2: Create a GitHub repo
 
 1. Go to https://github.com/new
 2. Name it `quiz-app`, make it **Public**, click **Create**
 3. Copy the repo URL (e.g. `https://github.com/YOUR_USERNAME/quiz-app.git`)
 
-### Step 3: Push code to GitHub 💻
+### Step 3: Push code to GitHub
 
 ```bash
 cd quiz-app
@@ -66,7 +66,7 @@ git push -u origin main
 
 ---
 
-## PART 2 — Launch EC2 instance ☁️
+## PART 2 — Launch EC2 instance
 
 1. Go to **AWS Console → EC2 → Launch Instance**
 2. Fill in:
@@ -86,9 +86,9 @@ git push -u origin main
 
 ---
 
-## PART 3 — SSH into EC2 and install tools 🔧
+## PART 3 — SSH into EC2 and install tools
 
-### Step 1: SSH into EC2 💻
+### Step 1: SSH into EC2
 
 ```bash
 # On Mac/Linux:
@@ -99,9 +99,9 @@ ssh -i ~/Downloads/quiz-key.pem ubuntu@YOUR_EC2_PUBLIC_IP
 ssh -i C:\Users\YourName\Downloads\quiz-key.pem ubuntu@YOUR_EC2_PUBLIC_IP
 ```
 
-You're now **inside the EC2**. Every command below runs here (🔧).
+You're now **inside the EC2**. Every command below runs here.
 
-### Step 2: Install Docker 🔧
+### Step 2: Install Docker
 
 ```bash
 sudo apt update
@@ -111,13 +111,13 @@ sudo systemctl enable docker
 sudo usermod -aG docker ubuntu
 ```
 
-### Step 3: Install Java (Jenkins needs it) 🔧
+### Step 3: Install Java (Jenkins needs it)
 
 ```bash
 sudo apt install -y openjdk-17-jdk
 ```
 
-### Step 4: Install Jenkins 🔧
+### Step 4: Install Jenkins
 
 ```bash
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
@@ -130,20 +130,20 @@ sudo systemctl start jenkins
 sudo systemctl enable jenkins
 ```
 
-### Step 5: Let Jenkins run Docker 🔧
+### Step 5: Let Jenkins run Docker
 
 ```bash
 sudo usermod -aG docker jenkins
 sudo systemctl restart jenkins
 ```
 
-### Step 6: Install git and curl (usually already there) 🔧
+### Step 6: Install git and curl (usually already there)
 
 ```bash
 sudo apt install -y git curl
 ```
 
-### Step 7: Get the Jenkins initial admin password 🔧
+### Step 7: Get the Jenkins initial admin password
 
 ```bash
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
@@ -152,7 +152,7 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 ---
 
-## PART 4 — Configure Jenkins 🌐
+## PART 4 — Configure Jenkins
 
 ### Step 1: Open Jenkins
 
@@ -174,7 +174,7 @@ Go to `http://YOUR_EC2_PUBLIC_IP:8080` in your browser.
 1. **Jenkins dashboard → New Item**
 2. Name: `quiz-app-pipeline`
 3. Type: **Pipeline** → OK
-4. Scroll to **Build Triggers** → check ✅ **GitHub hook trigger for GITScm polling**
+4. Scroll to **Build Triggers** → check **GitHub hook trigger for GITScm polling**
 5. Scroll to **Pipeline** section:
    - **Definition:** Pipeline script from SCM
    - **SCM:** Git
@@ -185,13 +185,13 @@ Go to `http://YOUR_EC2_PUBLIC_IP:8080` in your browser.
 
 ### Step 5: Run it manually once
 
-Click **Build Now** on the left. Wait for it to go green ✅. If something breaks, click the build number → **Console Output** to see why.
+Click **Build Now** on the left. Wait for it to go green. If something breaks, click the build number → **Console Output** to see why.
 
 Once green, open `http://YOUR_EC2_PUBLIC_IP:5000` — **your quiz is LIVE**.
 
 ---
 
-## PART 5 — Add the GitHub Webhook 📦
+## PART 5 — Add the GitHub Webhook
 
 This is what makes it auto-trigger on `git push`.
 
@@ -200,15 +200,15 @@ This is what makes it auto-trigger on `git push`.
    - **Payload URL:** `http://YOUR_EC2_PUBLIC_IP:8080/github-webhook/` (keep the trailing slash!)
    - **Content type:** `application/json`
    - **Which events:** Just the push event
-   - **Active:** ✅
+   - **Active:*
 3. Click **Add webhook**
-4. GitHub will ping it immediately — you should see a green ✅ checkmark next to the webhook.
+4. GitHub will ping it immediately — you should see a green checkmark next to the webhook.
 
 ---
 
-## 🎉 PART 6 — Test the full pipeline
+## PART 6 — Test the full pipeline
 
-On your laptop 💻:
+On your laptop:
 
 ```bash
 # Edit a question in app.py (change any question text)
@@ -225,7 +225,7 @@ Within ~10 seconds:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Problem | Fix |
 |---------|-----|
@@ -235,9 +235,3 @@ Within ~10 seconds:
 | Webhook not firing | Test it in GitHub → Webhooks → Recent Deliveries → Redeliver |
 | `git push` asks for password | Use a GitHub Personal Access Token instead of password, or set up SSH keys |
 | Build hangs on `docker build` | t2.micro is slow; wait 2-3 min or upgrade to t2.small |
-
----
-
-## 🛑 Stop paying AWS
-
-When done, **terminate the EC2 instance** in the AWS Console to stop charges.
